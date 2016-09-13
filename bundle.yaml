@@ -1,4 +1,3 @@
-series: xenial
 description: |
   Example Jenkins bundle
 tags:
@@ -6,6 +5,7 @@ tags:
 services:
   jenkins:
     charm: cs:~oil-charms/jenkins
+    series: xenial
     options:
       release: trunk
       #release: http://archive.admin.canonical.com/other/jenkins-stable/jenkins_1.625.3_all.deb
@@ -14,11 +14,21 @@ services:
     num_units: 1
     expose: true
   ci-configurator:
-    charm: cs:~oil-charms/ci-configurator
+    charm: cs:~oil-charms/ci-configurator-3
+    series: xenial
     options:
       config-repo: https://github.com/lutostag/jenkins-charm-ci-config-repo.git
       config-repo-rcs: git
+      config-repo-revision: origin/self-ci
       jjb-install-source: distro
+  vault:
+    charm: cs:~lutostag/trusty/vault-3
+    series: trusty
+    num_units: 1
+    options:
+      disable-mlock: true
 relations:
 - - jenkins
+  - ci-configurator
+- - vault
   - ci-configurator
