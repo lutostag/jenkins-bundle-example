@@ -8,19 +8,19 @@ services:
     series: xenial
     options:
       release: trunk
-      #release: http://archive.admin.canonical.com/other/jenkins-stable/jenkins_1.625.3_all.deb
-      plugins: "multiple-scms git buildresult-trigger"
+      plugins: "multiple-scms git buildresult-trigger multiple-scms git buildresult-trigger mailer ssh-credentials git-client matrix-project credentials workflow-scm-step scm-api workflow-step-api display-url-api structs junit script-security"
       tools: "git"
     num_units: 1
     expose: true
   ci-configurator:
-    charm: cs:~oil-charms/ci-configurator-3
+    charm: cs:~oil-charms/ci-configurator-4
     series: xenial
     options:
       config-repo: https://github.com/lutostag/jenkins-charm-ci-config-repo.git
       config-repo-rcs: git
       config-repo-revision: origin/self-ci
       jjb-install-source: distro
+      update-frequency: "* * * * *"
   vault:
     charm: cs:~lutostag/trusty/vault-3
     series: trusty
